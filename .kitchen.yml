@@ -1,0 +1,32 @@
+driver_plugin: vagrant
+driver_config:
+  use_vagrant_berkshelf_plugin: true
+  use_vagrant_provision: true
+  require_chef_omnibus: true
+  network:
+  - ["forwarded_port", {guest: 9043, host: 9043}]
+  customize:
+    memory: 2048
+
+platforms:
+- name: ubuntu-13.04
+  driver_config:
+    box: ubuntu-13.04-amd64-opscode
+    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-13.04_provisionerless.box
+  run_list:
+    - recipe[apt]
+  attributes:
+    was:
+      installer:
+        urls:
+          - http://repo.example.com/software/ibm/websphere-application-server/linux_x86/8.5.5/WAS_ND_V8.5.5_1_OF_3.zip
+          - http://repo.example.com/software/ibm/websphere-application-server/linux_x86/8.5.5/WAS_ND_V8.5.5_2_OF_3.zip
+          - http://repo.example.com/software/ibm/websphere-application-server/linux_x86/8.5.5/WAS_ND_V8.5.5_3_OF_3.zip
+        license_agreement: accept
+
+suites:
+- name: basic
+  run_list:
+  - recipe[minitest-handler]
+  - recipe[test::basic]
+

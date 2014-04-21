@@ -1,0 +1,44 @@
+driver_config:
+  synced_folders:
+    ../../../cache: /mnt/shared
+
+platforms:
+- name: ubuntu-13.04
+  attributes:
+    was:
+      installer:
+        urls:
+          - file:///mnt/shared/WAS_ND_V8.5.5_1_OF_3.zip
+          - file:///mnt/shared/WAS_ND_V8.5.5_2_OF_3.zip
+          - file:///mnt/shared/WAS_ND_V8.5.5_3_OF_3.zip
+        license_agreement: accept
+      ldap:
+        id: LDAP1
+        host: ldap.example.com
+        port: 389
+        bind_dn: CN=Svc Acct - WAS AD Query,CN=Managed Service Accounts,DC=example,DC=com
+        bind_password: BadPassword
+        server_type: AD
+        login_properties:
+          - uid
+          - mail
+        base_dn: DC=example,DC=com
+        entities:
+        - name: Group
+          object_classes:
+            - group
+          search_bases:
+            - OU=Test Groups,DC=example,DC=com
+          search_filter: (ObjectCategory=Group)
+        - name: PersonAccount
+          object_classes:
+            - inetOrgPerson
+            - person
+            - user
+          search_bases:
+            - OU=Test Users,DC=example,DC=com
+          search_filter: (ObjectCategory=User)
+    im:
+      installer:
+        url: file:///mnt/shared/InstalMgr1.6.2_LNX_X86_64_WAS_8.5.5.zip
+
